@@ -2,10 +2,11 @@
 
 class FlyingObject():
     QUADRANGLE = "quadrangle"
-    def __init__(self, x, y, speed, obj_type):
+    def __init__(self, x, y, speed, obj_type, health):
         self.x = x
         self.y = y
-        self.speed = speed
+        self.speed  = speed
+        self.health = health
         self.points = self.__generate_points(obj_type)
 
     def move(self, degree):

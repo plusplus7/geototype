@@ -13,7 +13,7 @@ class BulletUnitTest(unittest.TestCase):
         pass
 
     def testFlyingBullet45(self):
-        b = bullet.Bullet(0, 0, 45, math.sqrt(18), math.sqrt(2))
+        b = bullet.Bullet(0, 0, 45, math.sqrt(18), math.sqrt(2), 100)
         print b.points()
         self.assertAlmostEqual(0, b.points()[0][0])
         self.assertAlmostEqual(0, b.points()[0][1])
@@ -35,7 +35,7 @@ class BulletUnitTest(unittest.TestCase):
         self.assertAlmostEqual(5, b.points()[1][1])
 
     def testFlyingBullet30(self):
-        b = bullet.Bullet(0, 0, 30, 4, 2)
+        b = bullet.Bullet(0, 0, 30, 4, 2, 100)
         print b.points()
         self.assertAlmostEqual(0, b.points()[0][0])
         self.assertAlmostEqual(0, b.points()[0][1])
