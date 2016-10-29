@@ -4,7 +4,7 @@ import math
 
 class Bullet():
 
-    def __init__(self, x, y, degree, length, speed):
+    def __init__(self, x, y, degree, length, speed, damage):
         self.x  = x
         self.y  = y
         self.dg = degree
@@ -13,6 +13,8 @@ class Bullet():
 
         self.dx = self.sp * math.sin(math.radians(self.dg))
         self.dy = self.sp * math.cos(math.radians(self.dg))
+
+        self.dmg = damage
 
         self.__points = self.__generate_points()
 
