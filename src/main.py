@@ -4,13 +4,19 @@ import os
 import tornado.web
 import tornado.websocket
 import tornado.ioloop
+import server
 
 class IndexHandler(tornado.web.RequestHandler):
     def get(self):
-        self.write("Hello, world")
+        self.render("Hello, world")
+
+class GameHandler(tornado.web.RequestHandler):
+    def get(self, room):
+        self.write("Hello, game")
 
 urls = [
     (r'/', IndexHandler),
+    (r'/game/(?P<room_id>[a-zA-Z0-9-_]+)', GameHandler),
 ]
 
 settings = {
