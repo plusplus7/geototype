@@ -1,6 +1,9 @@
 # -*- coding: UTF-8 -*-
 
-QUADRANGLE = "quadrangle"
+import math
+
+QUADRANGLE      = "quadrangle"
+QUADRANGLE_2    = "quadrangle2"
 
 class FlyingObject():
     def __init__(self, x, y, speed, obj_type, health):
@@ -13,6 +16,8 @@ class FlyingObject():
     def move(self, degree):
         dx = self.speed * math.sin(math.radians(degree))
         dy = self.speed * math.cos(math.radians(degree))
+        self.x = self.x + dx
+        self.y = self.y + dy
         for pt in self.__points:
             pt[0] = pt[0] + dx
             pt[1] = pt[1] + dy
@@ -27,6 +32,13 @@ class FlyingObject():
                 [self.x+2, self.y-2],
                 [self.x+2, self.y+2],
                 [self.x-2, self.y+2],
+            ]
+        elif cmp(QUADRANGLE_2, obj_type) == 0:
+            return [
+                [self.x-3, self.y-3],
+                [self.x+3, self.y-3],
+                [self.x+3, self.y+3],
+                [self.x-3, self.y+3],
             ]
         else:
             raise Exception('Unsupported object type')
