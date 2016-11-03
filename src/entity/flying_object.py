@@ -35,10 +35,10 @@ class FlyingObject():
             ]
         elif cmp(QUADRANGLE_2, obj_type) == 0:
             return [
-                [self.x-3, self.y-3],
-                [self.x+3, self.y-3],
-                [self.x+3, self.y+3],
-                [self.x-3, self.y+3],
+                [self.x-4, self.y-4],
+                [self.x+4, self.y-4],
+                [self.x+4, self.y+4],
+                [self.x-4, self.y+4],
             ]
         else:
             raise Exception('Unsupported object type')

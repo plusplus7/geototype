@@ -1,0 +1,10 @@
+<html>
+    <head>
+        <title>Geototype</title>
+    </head>
+    <body>
+        {% for room in rooms %}
+            <a href="/game/{{ room }}">{{ room }}</a><br/>
+        {% end %}
+    </body>
+</html>

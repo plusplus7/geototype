@@ -1,8 +1,8 @@
 # -*- coding: UTF-8 -*-
 
 import sys
-sys.path.append("../../entity")
-import flying_object
+sys.path.append("../entity")
+from entity import flying_object
 import time
 
 class DemoStage():
@@ -16,13 +16,14 @@ class DemoStage():
         self.es = {}
         self.d  = {}
         for i in range(3):
-            t = flying_object.FlyingObject(10 + i * 10, 40, 1, flying_object.QUADRANGLE_2, 100)
+            t = flying_object.FlyingObject(10 + i * 10, 40, 0.5, flying_object.QUADRANGLE_2, 100)
             self.es[i]  = t
             self.d[i]   = (((i&1) << 1 ) - 1) * 90
         pass
 
     def get_view(self):
         view = {
+            "act" : 7,
             "P" : {},
             "E" : {},
         }
@@ -45,14 +46,18 @@ class DemoStage():
             self.es[e].move(self.d[e])
         pass
 
-    def add_player(self, name):
+    def add_player(self, name, nick):
         cnt = len(self.ps.keys())
         if cnt >= DemoStage.__PLAYER_LIMIT:
             return "Out of player limit"
 
         t = flying_object.FlyingObject(15 + cnt * 20, 5, 1, flying_object.QUADRANGLE, 100)
-        self.ps[name] = t
-        return "Player %s joined!" % (name,)
+        self.ps[name] = [t, nick]
+        return "%s joined as player!" % (nick,)
+
+    def del_player(self, name):
+        p = self.ps.pop(name)
+        return "Player %s left" % (p[1], )
 
     def player_operate(self, op_type, name, data):
         if op_type == DemoStage.__PLAYER_MOVE:
