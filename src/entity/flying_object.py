@@ -1,4 +1,5 @@
 # -*- coding: UTF-8 -*-
+import math
 
 QUADRANGLE = "quadrangle"
 
@@ -16,6 +17,7 @@ class FlyingObject():
         for pt in self.__points:
             pt[0] = pt[0] + dx
             pt[1] = pt[1] + dy
+
 
     def points(self):
         return self.__points

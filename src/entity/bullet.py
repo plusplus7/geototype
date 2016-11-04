@@ -20,8 +20,10 @@ class Bullet():
 
     def move(self):
         for pt in self.__points:
-            pt[0] = pt[0] + self.dx
-            pt[1] = pt[1] + self.dy
+            pt[0] = pt[0] - self.dx
+            pt[1] = pt[1] - self.dy
+        self.x = pt[0]
+        self.y = pt[1]
 
     def points(self):
         return self.__points
