@@ -61,7 +61,6 @@ app.factory('view', function(gm) {
     var view = {
         update  : function(data) {
             for (var name in data.E) {
-                console.debug(gm.contain(name));
                 if (gm.contain(name) == false) {
                     this.scene.add(gm.createLine(name, 0x00ff00, data.E[name], true));
                 } else {
@@ -73,16 +72,22 @@ app.factory('view', function(gm) {
             this.renderer.render(this.scene, this.camera);
         }
     };
+    var jnode = $('#renderPanel');
+    var node = document.getElementById('renderPanel');
+    var windowWidth     = jnode.parent().width();
+    var windowHeight    = (windowWidth / 4) * 3;
+    console.debug(windowWidth);
+    console.debug(windowHeight);
     scene      = new THREE.Scene();
-    camera     = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 1, 1000 );
+    camera     = new THREE.PerspectiveCamera( 70, windowWidth / windowHeight, 1, 1000 );
     renderer   = new THREE.WebGLRenderer();
     light      = new THREE.DirectionalLight( 0xffffff );
     camera.position.y=80;
     camera.position.x=50;
     camera.position.z=50;
     camera.lookAt({x:50, y:0, z:50});
-    renderer.setSize( window.innerWidth, window.innerHeight );
-    document.body.appendChild( renderer.domElement );
+    renderer.setSize( windowWidth, windowHeight );
+    node.appendChild( renderer.domElement );
 
     var LineMaterial  = new THREE.LineBasicMaterial({
         color: 0x0000ff

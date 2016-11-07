@@ -62,7 +62,10 @@ class GameServer():
     def get_player_list(self, room_id):
         res = []
         for i in self.rooms[room_id][1].keys():
-            res.append(self.rooms[room_id][1][i].nick_id)
+            res.append({
+                "name"      : self.rooms[room_id][1][i].nick_id + "#" + str(self.rooms[room_id][1][i].sock_id),
+                "user_type" : self.rooms[room_id][1][i].user_type,
+            })
         return res
 
     def announce(self, room_id, msg):

@@ -4,20 +4,27 @@
         <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" />
         <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
         <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-        <script src="/static/three.min.js"></script>
-        <script src="/static/angular.min.js"></script>
+        <script src="/static/asserts/three.min.js"></script>
+        <script src="/static/asserts/angular.min.js"></script>
         <script src="/static/app.js"></script>
         <script src="/static/msgCtrl.js"></script>
     </head>
     <body>
         <div class="container" ng-app="geototypeApp">
-            <div class="row" ng-controller="msgCtrl" ng-init="init('ws://localhost:7777/msg', '{{ room_id }}', 'test')">
-                <div class="col-sm-3">
+            <div class="row-fluid" ng-controller="msgCtrl" ng-init="init('ws://localhost:7777/msg', '{{ room_id }}', '{{ username }}')">
+                <div class="col-sm-2">
+                    <p>
+                        <h5>Welcome to<br/>room {{ room_id }}</h5>
+                    </p>
                     <ul class="list-group">
-                        <li class="list-group-item">
-                            <span class="badge">14</span>
+                        <li class="list-group-item" ng-repeat="(name, user_type) in player_list">
+                            <p ng-bind="name"></p>
                         </li>
                     </ul>
+                </div>
+                <div class="col-sm-10">
+                    <div id="renderPanel">
+                    </div>
                 </div>
             </div>
         </div>

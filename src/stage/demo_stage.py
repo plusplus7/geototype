@@ -37,7 +37,6 @@ class DemoStage():
 
     def run(self):
         for e in self.es.keys():
-            print self.es[e].x
             if self.es[e].x <= 5:
                 self.d[e] = 90
             if self.es[e].x >= 45:
@@ -73,6 +72,5 @@ if __name__ == "__main__":
     a.add_player(100)
     for i in range(100):
         a.run()
-        print a.get_view()
         a.player_operate(10000, 100, 45)
         time.sleep(1)

@@ -1,12 +1,20 @@
-app.controller('msgCtrl', function($scope, view) {
+app.controller('msgCtrl', function($scope, view, $timeout) {
     $scope.wsOpen = function(event) {
         console.debug(event);
     };
 
     $scope.wsMessage = function(event) {
         message = JSON.parse(event.data);
-        if (message.act === 1) { // JOIN SUCCESSFULLYj
-            $scope.join_as_watcher();
+        if (message.act != 7)
+            console.debug(message);
+        if (message.act === 1) { // JOIN SUCCESSFULLY
+            $scope.join_as_watcher(message.name);
+        } else if (message.act === 2) {// Initialize 
+            $scope.someone_joins(message.nick_id, message.user_type);
+        } else if (message.act === 3) {// Someone joins
+            $scope.init_player_list(message.data);
+        } else if (message.act === 5) {// Someone leaves
+            $scope.someone_leaves(message.name);
         } else if (message.act === 7) {// PAINT PLEASE
             $scope.view.update(message);
         }
@@ -23,6 +31,31 @@ app.controller('msgCtrl', function($scope, view) {
             nick_id     : $scope.name,
             user_type   : 1
         }));
+    };
+
+    $scope.player_list = {};
+    $scope.someone_joins = function(name, type) {
+        $timeout(function() {
+            console.debug($scope.player_list);
+            $scope.player_list[name] = type;
+            console.debug($scope.player_list);
+            console.debug(name);
+            console.debug(type);
+            console.debug($scope.player_list);
+        }, 500);
+    };
+    $scope.someone_leaves = function(name) {
+        $timeout(function() {
+            delete $scope.player_list[name];
+        }, 500);
+    };
+
+    $scope.init_player_list = function(data) {
+        $timeout(function() {
+            for (var i in data) {
+                $scope.player_list[data[i].name]= data[i].user_type;
+            }
+        }, 500);
     };
 
     $scope.init = function (wsAddr, roomId, name) {

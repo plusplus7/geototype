@@ -4,7 +4,11 @@
     </head>
     <body>
         {% for room in rooms %}
-            <a href="/game/{{ room }}">{{ room }}</a><br/>
+        <form action="/game/{{ room }}" method="post">
+            Join as:
+            <input type="text" name="username"/>
+            <a href="javascript:;" onclick="parentNode.submit();">{{ room }}</a>
+        </form>
         {% end %}
     </body>
 </html>

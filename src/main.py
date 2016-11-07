@@ -18,11 +18,17 @@ server = server.GameServer(ioloop, 5)
 
 class IndexHandler(tornado.web.RequestHandler):
     def get(self):
-        self.render("index.html", rooms = server.get_room_list())
+        self.render("index.html",
+            rooms = server.get_room_list()
+        )
 
 class GameHandler(tornado.web.RequestHandler):
-    def get(self, room_id):
-        self.render("panel.html", room_id = room_id)
+    def post(self, room_id):
+        username = self.get_argument("username")
+        self.render("panel.html",
+            room_id = room_id,
+            username = username,
+        )
 
 class MessageHandler(tornado.websocket.WebSocketHandler):
 
@@ -49,13 +55,18 @@ class MessageHandler(tornado.websocket.WebSocketHandler):
             })
             server.announce(self.room_id, {
                 "act"       : WSJOIN,
-                "nick_id"   : self.nick_id,
+                "nick_id"   : self.nick_id + "#" + str(self.sock_id),
+                "user_type" : self.user_type
             })
         elif message["act"] == WSMOVE:
             self.room_id    = message["room_id"]
             server.player_input(self, message["input"])
 
     def on_close(self):
+        server.announce(self.room_id, {
+            "act"       : WSLEAVE,
+            "nick_id"   : self.nick_id,
+        })
         print "%d left" % self.sock_id
         server.del_player(self)
 
