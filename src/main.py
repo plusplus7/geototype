@@ -50,8 +50,9 @@ class MessageHandler(tornado.websocket.WebSocketHandler):
             self.input_dir  = None
             server.add_player(self)
             self.write_message({
-                "act"   : WSINIT,
-                "data"  : server.get_player_list(self.room_id),
+                "act"       : WSINIT,
+                "nick_id"   : self.nick_id + "#" + str(self.sock_id),
+                "data"      : server.get_player_list(self.room_id),
             })
             server.announce(self.room_id, {
                 "act"       : WSJOIN,

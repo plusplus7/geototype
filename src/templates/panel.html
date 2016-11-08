@@ -17,8 +17,8 @@
                         <h5>Welcome to<br/>room {{ room_id }}</h5>
                     </p>
                     <ul class="list-group">
-                        <li class="list-group-item" ng-repeat="(name, user_type) in player_list">
-                            <p ng-bind="name"></p>
+                        <li class="list-group-item" ng-repeat="(user_name, user_type) in player_list" ng-class="{active: user_name===name}">
+                            <p ng-bind="user_name"></p>
                         </li>
                     </ul>
                 </div>
