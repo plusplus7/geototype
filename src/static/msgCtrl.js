@@ -10,10 +10,10 @@ app.controller('msgCtrl', function($scope, view, $timeout) {
         if (message.act === 1) { // JOIN SUCCESSFULLY
             $scope.join_as_watcher(message.name);
         } else if (message.act === 2) {// Initialize 
-            $scope.someone_joins(message.nick_id, message.user_type);
+            $scope.someone_joins(message.name, message.user_type);
         } else if (message.act === 3) {// Someone joins
-            $scope.name = message.nick_id;
-            $scope.init_player_list(message.data);
+            $scope.name = message.name;
+            $scope.init_player_list(message.player_list);
         } else if (message.act === 5) {// Someone leaves
             $scope.someone_leaves(message.name);
         } else if (message.act === 7) {// PAINT PLEASE

@@ -33,9 +33,9 @@ class GameHandler(tornado.web.RequestHandler):
 class MessageHandler(tornado.websocket.WebSocketHandler):
 
     def open(self):
-        self.write_message({
-            "act"   : WSOPEN,
-        })
+        self.write_message(
+            Message.socket_open_response()
+        )
         self.sock_id    = random.randint(1000000, 2000000)
         self.user_type  = server.PLAYER
 
@@ -49,26 +49,28 @@ class MessageHandler(tornado.websocket.WebSocketHandler):
             self.user_type  = message["user_type"]
             self.input_dir  = None
             server.add_player(self)
-            self.write_message({
-                "act"       : WSINIT,
-                "nick_id"   : self.nick_id + "#" + str(self.sock_id),
-                "data"      : server.get_player_list(self.room_id),
-            })
-            server.announce(self.room_id, {
-                "act"       : WSJOIN,
-                "nick_id"   : self.nick_id + "#" + str(self.sock_id),
-                "user_type" : self.user_type
-            })
+            self.write_message(
+                Message.player_init_response(
+                    self.nick_id + "#" + str(self.sock_id),
+                    server.get_player_list(self.room_id)
+                )
+            )
+            server.announce(self.room_id,
+                Message.player_join_response(
+                    self.nick_id + "#" + str(self.sock_id),
+                    self.user_type
+                )
+            )
         elif message["act"] == WSMOVE:
             self.room_id    = message["room_id"]
             server.player_input(self, message["input"])
 
     def on_close(self):
-        server.announce(self.room_id, {
-            "act"       : WSLEAVE,
-            "nick_id"   : self.nick_id,
-        })
-        print "%d left" % self.sock_id
+        server.announce(self.room_id,
+            Message.player_leave_response(
+                    self.nick_id + "#" + str(self.sock_id)
+            )
+        )
         server.del_player(self)
 
 urls = [
