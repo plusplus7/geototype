@@ -1,8 +1,10 @@
 # -*- coding: UTF-8 -*-
 
-import unittest
-import bullet
 import math
+import unittest
+
+import bullet
+
 
 class BulletUnitTest(unittest.TestCase):
 

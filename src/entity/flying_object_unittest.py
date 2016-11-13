@@ -1,7 +1,9 @@
 # -*- coding: UTF-8 -*-
 
 import unittest
+
 import flying_object
+
 
 class FlyingObjectTest(unittest.TestCase):
 

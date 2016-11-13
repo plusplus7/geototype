@@ -1,4 +1,5 @@
 # -*- coding: UTF-8 -*-
+import math
 
 QUADRANGLE = "quadrangle"
 
@@ -17,11 +18,13 @@ class FlyingObject():
             pt[0] = pt[0] + dx
             pt[1] = pt[1] + dy
 
+
     def points(self):
         return self.__points
 
     def __generate_points(self, obj_type):
         if cmp(QUADRANGLE, obj_type) == 0:
+            self.length = 4
             return [
                 [self.x-2, self.y-2],
                 [self.x+2, self.y-2],
