@@ -24,6 +24,7 @@ class FlyingObject():
 
     def __generate_points(self, obj_type):
         if cmp(QUADRANGLE, obj_type) == 0:
+            self.length = 4
             return [
                 [self.x-2, self.y-2],
                 [self.x+2, self.y-2],

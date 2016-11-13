@@ -4,40 +4,38 @@ import math
 
 class Core():
     def __init__(self):
+        self.flying_objects = {}
+        self.bullets        = {}
         pass
 
     def add_flying_object(self, name, entity):
-        self.fobj_name = name
-        self.flying_object = entity
+        self.flying_objects[name] = entity
 
     def add_bullet(self, name, entity):
-        self.bobj_name = name
-        self.bullet = entity
+        self.bullets[name] = entity
 
-
-    def check_collision(self, fobj, bobj):
-        self.flying_object.health = fobj.health
-        self.bullet.dmg = bobj.dmg
-        flag = 0
-
+    def check_collision(self):
         def distance(x1, x2, y1, y2):
             return (x2 - x1) ** 2 + (y2 - y1) ** 2
-        if distance(bobj.x,fobj.x,bobj.y,fobj.y) <= 2*math.sqrt(2):
-                flag = 1
-                self.flying_object.health -= 1
-                self.bullet = None
-        if(flag):
-            return 1
-        else:
-            return -1
+        def collide(f_obj, b_obj):
+            b_pts = b_obj.points()
+            return distance(b_pts[0][0], f_obj.x, b_pts[1][1], f_obj.y) <= 2*math.sqrt(f_obj.length)\
+            and distance(b_pts[1][0], f_obj.x, b_pts[1][1], f_obj.y) <= 2*math.sqrt(f_obj.length)
 
-
-
+        for f_name in self.flying_objects.keys():
+            f_obj = self.flying_objects[f_name]
+            for b_name in  self.bullets.keys():
+                b_obj = self.bullets[b_name]
+                if collide(f_obj, b_obj) == True:
+                    f_obj.health -= b_obj.dmg
+                    self.bullets.pop(b_name)
+                    if f_obj.health <= 0:
+                        self.flying_objects.pop(f_name)
 
     def get_entities(self):
         return [
-            {"p1": self.flying_object},
-            {"b1": self.bullet}
+            self.flying_objects,
+            self.bullets,
         ]
 
 
