@@ -93,10 +93,6 @@ app.factory('view', function(gm) {
         color: 0x0000ff
     });
 
-    var EnemyLineMaterial  = new THREE.LineBasicMaterial({
-        color: 0x00ff00
-    });
-
     for (i=0; i<=100; i+=10)
     {
         {

@@ -1,6 +1,7 @@
 # -*- coding: UTF-8 -*-
 
 import os
+import sys
 import tornado.web
 import tornado.websocket
 import tornado.ioloop
@@ -10,6 +11,7 @@ import server
 from message import *
 
 server_name = ["Wahaha", "Gahaha", "Papapa", "Wuwuwu", "Yinyinyin"]
+ws_host = 'localhost:7777'
 
 
 ioloop = tornado.ioloop.IOLoop.instance()
@@ -28,6 +30,7 @@ class GameHandler(tornado.web.RequestHandler):
         self.render("panel.html",
             room_id = room_id,
             username = username,
+            host = ws_host
         )
 
 class MessageHandler(tornado.websocket.WebSocketHandler):
@@ -90,8 +93,11 @@ def main(host="0.0.0.0", port=7777):
     for i in range(server.limit):
         print server.create_room(server_name[i])
     app = tornado.web.Application(urls, **settings)
+    global ws_host
+    ws_host = host + ':' + str(port)
     app.listen(port, host)
     ioloop.start()
 
 if __name__ == "__main__":
-    main()
+    if len(sys.argv) != 1:
+        main(sys.argv[1], sys.argv[2])
