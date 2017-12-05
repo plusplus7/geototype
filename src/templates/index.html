@@ -1,0 +1,14 @@
+<html>
+    <head>
+        <title>Geototype</title>
+    </head>
+    <body>
+        {% for room in rooms %}
+        <form action="/game/{{ room }}" method="post">
+            Join as:
+            <input type="text" name="username"/>
+            <a href="javascript:;" onclick="parentNode.submit();">{{ room }}</a>
+        </form>
+        {% end %}
+    </body>
+</html>

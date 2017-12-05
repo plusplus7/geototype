@@ -1,0 +1,32 @@
+<html>
+    <head>
+        <title>Room: {{ room_id }} - Geototype </title>
+        <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" />
+        <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+        <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+        <script src="/static/asserts/three.min.js"></script>
+        <script src="/static/asserts/angular.min.js"></script>
+        <script src="/static/app.js"></script>
+        <script src="/static/msgCtrl.js"></script>
+    </head>
+    <body>
+        <div class="container" ng-app="geototypeApp">
+		<div class="row-fluid" ng-controller="msgCtrl" ng-init="init('ws://{{host}}/msg', '{{ room_id }}', '{{ username }}')">
+                <div class="col-sm-2">
+                    <p>
+                        <h5>Welcome to<br/>room {{ room_id }}</h5>
+                    </p>
+                    <ul class="list-group">
+                        <li class="list-group-item" ng-repeat="(user_name, user_type) in player_list" ng-class="{active: user_name===name}">
+                            <p ng-bind="user_name"></p>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-sm-10">
+                    <div id="renderPanel">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
